@@ -5,6 +5,7 @@ import { ChevronDownIcon, SearchIcon, AdjustmentsIcon } from "react-native-heroi
 import { UserIcon } from "react-native-heroicons/outline";
 import { ScrollView, TextInput } from 'react-native-web';
 import Catergories from '../components/Catergories';
+import FeaturedRow from '../components/FeaturedRow';
 const HomeScreen = () => {
     const navigation = useNavigation();
 
@@ -52,6 +53,21 @@ const HomeScreen = () => {
                     paddingBottom: 100,
                 }}>
                 <Catergories />
+                <FeaturedRow
+                    id='1' 
+                    title='Featured'
+                    description='Paid placements from our partners'
+                />
+                <FeaturedRow 
+                    id='2'
+                    title='Tasty Discounts '
+                    description='Paid placements from our partners'
+                />
+                <FeaturedRow
+                    id='3' 
+                    title='Offers Near You!'
+                    description='Paid placements from our partners'
+                />
             </ScrollView>
         </SafeAreaView >
     )
