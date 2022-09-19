@@ -1,19 +1,38 @@
 import { View, Text, SafeAreaView, Image } from 'react-native'
-import React, { useLayoutEffect } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { ChevronDownIcon, SearchIcon, AdjustmentsIcon } from "react-native-heroicons/solid";
 import { UserIcon } from "react-native-heroicons/outline";
 import { ScrollView, TextInput } from 'react-native-web';
 import Catergories from '../components/Catergories';
 import FeaturedRow from '../components/FeaturedRow';
+import client from '../sanity';
+
 const HomeScreen = () => {
     const navigation = useNavigation();
+    const [featuredCategories,setFeaturedCategories]=useState([])
 
     useLayoutEffect(() => {
         navigation.setOptions({
             headerShown: false,
         });
     }, []);
+
+    useEffect(() => {
+        // const query = '*[_type =="featured"]{ ..., restaurants[]->{ ..., dishes[]->, type->{ name } }, }'
+        client.fetch(`*[_type =="featured"]{
+                ...,
+                  restaurants[]->{
+                    ...,
+                    dishes[]->,
+                  },
+              }`).then((data) => {
+                console.log(data);
+                setFeaturedCategories(data)
+            });
+    }, [])
+
+    console.log(featuredCategories);
 
     return (
         <SafeAreaView className='bg-white pt-5 overflow-hidden'>
